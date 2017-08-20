@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceTestConfiguration {
 
     @Bean
-    public OfferService tagService() {
+    public OfferService offerService() {
         return Mockito.mock(OfferService.class);
     }
 }
