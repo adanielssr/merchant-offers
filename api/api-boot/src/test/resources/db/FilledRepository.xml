@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <OFFER id="1" name="offer1"  />
-    <OFFER id="2" name="offer2"  />
-    <OFFER id="3" name="offer3"  />
+    <MERCHANT id="1" name="Merchant A"/>
+    <GOOD id="1" name="Product A" description="Description Product A" type="PRODUCT" ownerid="1"/>
+
+    <OFFER id="1" description="Description Offer 1 for Product A" newPrice="1.0" currency="EUR" status="ACTIVE"
+           relatedgoodid="1" ownerid="1"/>
+    <OFFER id="2" description="Description Offer 2 for Product A" newPrice="2.0" currency="GBP" status="ACTIVE"
+           relatedgoodid="1" ownerid="1"/>
 </dataset>

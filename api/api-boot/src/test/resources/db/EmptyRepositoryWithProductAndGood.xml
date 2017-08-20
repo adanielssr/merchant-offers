@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <MERCHANT id="1" name="Merchant A" />
+    <GOOD id="1" name="Product A" description="Description Product A" type="PRODUCT" ownerid="1" />
+</dataset>
