@@ -1,7 +1,7 @@
 # Scope
 Merchant Offers is a project for creating simple offers by a Merchant.
 
-This project makes use multiple types of technology within:
+This project makes use of multiple types of technology such us:
 - [Spring Framework](https://spring.io/) (Spring data, Spring boot)
 - [Hibernate](http://hibernate.org/) (JPA)
 - [DBUnit](http://dbunit.sourceforge.net/)
