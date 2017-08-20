@@ -8,6 +8,7 @@ import com.github.adanielssr.merchant.offers.business.services.OfferService;
 import com.github.adanielssr.merchant.offers.dto.OfferDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,6 @@ public class OffersController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<OfferDto> createOffer(@RequestBody OfferDto offerDto)
             throws MerchantNotFoundException, GoodNotFoundException {
-        return ResponseEntity.ok(service.createOffer(offerDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createOffer(offerDto));
     }
 }

@@ -90,7 +90,7 @@ public class OffersControllerTest {
 
         ResponseEntity<OfferDto> result = controller.createOffer(offerDto);
 
-        Assert.assertEquals(HttpStatus.OK, result.getStatusCode());
+        Assert.assertEquals(HttpStatus.CREATED, result.getStatusCode());
         Assert.assertNotNull(result.getBody());
         Assert.assertEquals(offerDto, result.getBody());
     }

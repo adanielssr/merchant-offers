@@ -25,7 +25,7 @@
 
         <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
         <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
-        <maven.failsafe.plugin>2.19.1</maven.failsafe.plugin>
+        <maven.failsafe.plugin>2.18.1</maven.failsafe.plugin>
 
         <!-- SPRING -->
         <spring.version>4.3.3.RELEASE</spring.version>
