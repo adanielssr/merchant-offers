@@ -2,14 +2,15 @@
 Merchant Offers is a project for creating simple offers by a Merchant.
 
 This project makes use multiple types of technology within:
-- Spring Framework (Spring data, Spring boot)
-- Hibernate (JPA)
-- DBUnit
-- Gson
-- HSQL
-- Project Lombok
-- Junit
-- Mockito
+- [Spring Framework](https://spring.io/) (Spring data, Spring boot)
+- [Hibernate](http://hibernate.org/) (JPA)
+- [DBUnit](http://dbunit.sourceforge.net/)
+- [Gson](https://github.com/google/gson)
+- [HSQLDB](http://hsqldb.org/)
+- [Project Lombok](https://projectlombok.org/)
+- [Mapstruct](http://mapstruct.org/)
+- [Junit](http://junit.org/junit4/)
+- [Mockito](http://site.mockito.org/)
 
 # Build and Test the project
 To test and build this application just run the following command:
