@@ -1,9 +1,18 @@
 package com.github.adanielssr.merchant.offers.domain;
 
+import java.util.Currency;
+
+import com.github.adanielssr.merchant.offers.domain.entities.Good;
+import com.github.adanielssr.merchant.offers.domain.entities.GoodType;
+import com.github.adanielssr.merchant.offers.domain.entities.Merchant;
 import com.github.adanielssr.merchant.offers.domain.entities.Offer;
+import com.github.adanielssr.merchant.offers.domain.entities.OfferStatus;
+import com.github.adanielssr.merchant.offers.domain.repositories.GoodRepository;
+import com.github.adanielssr.merchant.offers.domain.repositories.MerchantRepository;
 import com.github.adanielssr.merchant.offers.domain.repositories.OfferRepository;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,38 +32,93 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 @DirtiesContext
 public class OfferRepositoryTest {
 
+    private static final String MERCHANT_NAME = "Merchant A";
+
+    private static final String PRODUCT_NAME = "Product A";
+
     @Autowired
     private OfferRepository offerRepository;
 
-    @Test(expected = DataIntegrityViolationException.class)
+    @Autowired
+    private MerchantRepository merchantRepository;
+
+    @Autowired
+    private GoodRepository goodRepository;
+
+    private Merchant merchant;
+
+    private Good good;
+
+    @Before
+    public void setup() {
+        goodRepository.deleteAll();
+        merchantRepository.deleteAll();
+        offerRepository.deleteAll();
+
+        merchant = merchantRepository.save(Merchant.builder().name(MERCHANT_NAME).build());
+        good = goodRepository.save(Good.builder().name(PRODUCT_NAME).owner(merchant).type(GoodType.PRODUCT)
+                .description("product description").build());
+    }
+
+    @Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
+    @DirtiesContext
     public void createEmptyOffer() {
         offerRepository.save(new Offer());
     }
 
-    @Test
-    public void createOffer() {
-        offerRepository.deleteAll();
+    @Test(expected = DataIntegrityViolationException.class)
+    @DirtiesContext
+    public void createOfferWithNullPrice() {
+        offerRepository
+                .save(Offer.builder().description("Offer of Product A").currency(getEur()).status(OfferStatus.ACTIVE)
+                        .owner(merchant).relatedGood(good).build());
+    }
 
-        Offer entity = new Offer();
-        entity.setName("offername");
+    @Test(expected = DataIntegrityViolationException.class)
+    @DirtiesContext
+    public void createOfferWithNullCurrency() {
+        offerRepository.save(Offer.builder().description("Offer of Product A").newPrice(1.0D).status(OfferStatus.ACTIVE)
+                .owner(merchant).relatedGood(good).build());
+    }
 
-        entity = offerRepository.save(entity);
+    @Test(expected = DataIntegrityViolationException.class)
+    @DirtiesContext
+    public void createOfferWithNullStatus() {
+        offerRepository.save(Offer.builder().description("Offer of Product A").newPrice(1.0D).currency(getEur())
+                .owner(merchant).relatedGood(good).build());
+    }
 
-        Assert.assertNotNull(entity.getCreatedAt());
+    @Test(expected = DataIntegrityViolationException.class)
+    @DirtiesContext
+    public void createOfferWithNullMerchant() {
+        offerRepository.save(Offer.builder().description("Offer of Product A").newPrice(1.0D).currency(getEur())
+                .status(OfferStatus.ACTIVE).relatedGood(good).build());
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    @DirtiesContext
+    public void createOfferWithNullGood() {
+        offerRepository.save(Offer.builder().description("Offer of Product A").newPrice(1.0D).currency(getEur())
+                .status(OfferStatus.ACTIVE).owner(merchant).build());
     }
 
     @Test
-    public void createDuplicatedOffer() {
-        offerRepository.deleteAll();
+    @DirtiesContext
+    public void createSuccessfullyAnOffer() {
+        Offer entity = new Offer();
+        entity.setDescription("Offer description");
+        entity.setNewPrice(1.0D);
+        entity.setCurrency(getEur());
+        entity.setStatus(OfferStatus.ACTIVE);
+        entity.setOwner(merchant);
+        entity.setRelatedGood(good);
 
-        Offer offer1 = new Offer();
-        offer1.setName("offerName");
-        offer1 = offerRepository.save(offer1);
+        Offer newEntity = offerRepository.save(entity);
+        Assert.assertNotNull(newEntity);
+        Assert.assertNotNull(newEntity.getId());
+    }
 
-        Offer offer2 = new Offer();
-        offer2.setName("offerName");
-        offer2 = offerRepository.save(offer2);
-
-        Assert.assertTrue(offer1.getCreatedAt().isBefore(offer2.getCreatedAt()));
+    private String getEur() {
+        return Currency.getInstance("EUR").getCurrencyCode();
     }
 }
