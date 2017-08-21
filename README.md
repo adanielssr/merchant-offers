@@ -1,5 +1,6 @@
 # Scope
 Merchant Offers is a project for creating simple offers by a Merchant.
+It exposes a RESTful service with POST on path /offers.
 
 This project makes use of multiple types of technology such us:
 - [Spring Framework](https://spring.io/) (Spring data, Spring boot)
